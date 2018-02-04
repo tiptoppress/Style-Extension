@@ -9,12 +9,14 @@ Author URI: http://tiptoppress.com
 */
 
 namespace termCategoryPostsPro\styleExtension;
-const MINBASEVERSION        = "4.7.1";
 
 // Don't call the file directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-const TEXTDOMAIN = 'style-extension';
+
+const VERSION        = '0.1';
+const TEXTDOMAIN     = 'style-extension';
+const MINBASEVERSION = "4.7.1";
 
 // private function section
 
@@ -33,6 +35,23 @@ function version_check( $min_base_version = MINBASEVERSION ) {
 }
 
 // Plugin filter and action section
+
+/**
+ * Enqueue widget related scripts for the widget admin page and customizer.
+ *
+ * @param string $hook the name of the admin hook for which the function was triggered.
+ */
+function admin_scripts( $hook ) {
+
+	if ( 'widgets.php' === $hook ) { // enqueue only for widget admin and customizer.
+
+		// control open and close the widget section.
+		wp_register_script( 'style-extension-admin-js', plugins_url( 'js/admin/style-extension.js', __FILE__ ), array( 'jquery' ), VERSION, true );
+		wp_enqueue_script( 'style-extension-admin-js' );
+	}
+}
+
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_scripts' );
 
 /**
  *  Applied to the list of links to display on the plugins page (beside the activate/deactivate links).
