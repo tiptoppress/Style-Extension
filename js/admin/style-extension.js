@@ -9,7 +9,7 @@
 
 // namespace
 
-var cwp_namespace = {
+var styleExtNamespace = {
 }
 
 jQuery(document).ready( function () {

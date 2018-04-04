@@ -24,13 +24,13 @@ const MINBASEVERSION = "4.7.1";
  * Check the Term and Category based Posts Widget version
  *
  */
-function version_check( $min_base_version = MINBASEVERSION ) {	
+function version_check( $min_base_version = MINBASEVERSION ) {
 	$min_base_version = explode('.', $min_base_version);
 	$installed_base_version = explode('.', \termcategoryPostsPro\VERSION);
 
 	$ret = ($min_base_version[0] < $installed_base_version[0]) ||
 			($min_base_version[0] == $installed_base_version[0] && $min_base_version[1] <= $installed_base_version[1]);
-	
+
 	return $ret;
 }
 
@@ -55,18 +55,18 @@ add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\admin_scripts' );
 
 /**
  *  Applied to the list of links to display on the plugins page (beside the activate/deactivate links).
- *  
+ *
  *  @return array of the widget links
- *  
+ *
  *  @since 0.1
  */
 function add_action_links ( $links ) {
     $pro_link = array(
         '<a target="_blank" href="http://tiptoppress.com/term-and-category-based-posts-widget/?utm_source=widget_seoext&utm_campaign=get_pro_seoext&utm_medium=action_link">'.__('Get the pro widget needed for this extension','category-posts').'</a>',
     );
-	
+
 	$links = array_merge($pro_link, $links);
-    
+
     return $links;
 }
 
@@ -77,7 +77,7 @@ add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), __NAMESPACE__.'\
  *
  */
 function cpwp_default_settings($settings) {
-	return wp_parse_args( ( array ) $setting, array(
+	return wp_parse_args( ( array ) $settings, array(
 		'style_test'         => '',
 	) );
 }
@@ -101,11 +101,11 @@ function version_notice() {
 add_action( 'admin_notices', __NAMESPACE__.'\version_notice' );
 
 function cpwp_after_footer_panel($widget,$instance) {
-	
+
 	if ( ! version_check( MINBASEVERSION ) ) {
 		return;
 	}
-	
+
 	$instance = wp_parse_args( ( array ) $instance, array(
 		'style_test'                => '',
 	) );
@@ -119,8 +119,7 @@ function cpwp_after_footer_panel($widget,$instance) {
 		</label>
 	</p>
 </div>
-<?php	
+<?php
 }
 
 add_action('cpwp_after_footer_panel',__NAMESPACE__.'\cpwp_after_footer_panel',10,2);
-
