@@ -13,7 +13,6 @@ namespace termCategoryPostsPro\styleExtension;
 // Don't call the file directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
-
 const VERSION        = '0.1';
 const TEXTDOMAIN     = 'style-extension';
 const MINBASEVERSION = "4.7.1";
@@ -23,9 +22,13 @@ const MINBASEVERSION = "4.7.1";
  /**
  * Check the Term and Category based Posts Widget version
  *
+ *  @return Base widget supporteds this Extension version
+ *
  */
 function version_check( $min_base_version = MINBASEVERSION ) {
 	$min_base_version = explode('.', $min_base_version);
+
+	if ( !defined( '\termcategoryPostsPro\VERSION' ) ) return false;
 	$installed_base_version = explode('.', \termcategoryPostsPro\VERSION);
 
 	$ret = ($min_base_version[0] < $installed_base_version[0]) ||
